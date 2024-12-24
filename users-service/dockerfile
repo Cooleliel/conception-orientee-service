@@ -1,0 +1,11 @@
+# Utiliser l'image officielle de Java
+FROM openjdk:17-jdk-slim
+
+# Ajouter le fichier JAR du service Utilisateurs
+COPY target/users-service.jar users-service.jar
+
+# Exposer le port sur lequel l'application va tourner
+EXPOSE 8080
+
+# Commande pour démarrer le service
+ENTRYPOINT ["java", "-jar", "/users-service.jar"]
