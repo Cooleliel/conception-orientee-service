@@ -1,8 +1,10 @@
 package com.ibam.users_service.usecases.user.command;
 
+import com.ibam.users_service.adapters.jpa.schema.UserSchema.Role;
+
 public interface BaseUserCommand {
-    String name();
+    String username();
     String email();
     String password();
-    String role();
+    Role role();
 }

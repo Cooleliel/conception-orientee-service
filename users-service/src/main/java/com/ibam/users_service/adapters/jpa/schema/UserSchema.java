@@ -1,57 +1,58 @@
 package com.ibam.users_service.adapters.jpa.schema;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
 public class UserSchema {
-    //constructor
-    public UserSchema(){};
-
-    public UserSchema(
-        String name,
-        String email,
-        String password,
-        String role
-    ) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
 
     //variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "user_name", nullable = false, unique = true)
+    private String username;
 
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<ProductSchema> products = new HashSet<ProductSchema>();
+
+    //constructor
+    public UserSchema(){};
+
+    public UserSchema(
+        String username,
+        String email,
+        String password,
+        Role role
+    ) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+
+    public enum Role {
+        ADMIN, VENDOR, USER
+    }
 
 
     //Getters & Setters
@@ -62,11 +63,11 @@ public class UserSchema {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return username;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -86,27 +87,13 @@ public class UserSchema {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public Set<ProductSchema> getProducts() {
-        return products;
-    }
-    public void setProducts(Set<ProductSchema> products) {
-        this.products = products;
-    }
-    public void addProduct(ProductSchema product) {
-        products.add(product);
-        product.setUser(this);
-    }
-    public void removeProduct(ProductSchema product) {
-        products.remove(product);
-        product.setUser(null);
-    }
 
     // Equals and hashCode based on email (unique)
     @Override

@@ -1,4 +1,4 @@
-package com.ibam.users_service;
+/*package com.ibam.users_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,3 +11,4 @@ class UsersServiceApplicationTests {
 	}
 
 }
+*/

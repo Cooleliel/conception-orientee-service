@@ -1,11 +1,13 @@
-# Utiliser l'image officielle de Java
-FROM openjdk:17-jdk-slim
+# Utiliser l'image officielle de Java légère
+FROM eclipse-temurin:17-jre-alpine
 
-# Ajouter le fichier JAR du service Utilisateurs
-COPY target/users-service.jar users-service.jar
+WORKDIR /app
+
+# Copier le fichier JAR du service Utilisateurs
+COPY target/users-service-0.0.1-SNAPSHOT.jar users-service.jar
 
 # Exposer le port sur lequel l'application va tourner
 EXPOSE 8080
 
 # Commande pour démarrer le service
-ENTRYPOINT ["java", "-jar", "/users-service.jar"]
+ENTRYPOINT ["java", "-jar", "/app/users-service.jar"]

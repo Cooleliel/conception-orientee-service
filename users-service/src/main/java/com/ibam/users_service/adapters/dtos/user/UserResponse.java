@@ -1,8 +1,6 @@
 package com.ibam.users_service.adapters.dtos.user;
 
-import java.util.Set;
-
-import com.ibam.users_service.domain.model.ProductEntity;
+import com.ibam.users_service.adapters.jpa.schema.UserSchema.Role;
 
 import lombok.Builder;
 
@@ -12,16 +10,16 @@ public record UserResponse(
     Long id,
 
     //@Schema(example="COULIBALY Eliel")
-    String name,
+    String username,
 
     //@Schema(example = "example@gmail.com")
     String email,
 
     //@Schema(example = "vendeur")
-    String role,
+    Role role
 
     //@Schema(example = ["x","y","a"])
-    Set<ProductEntity> products 
+    //Set<ProductEntity> products 
 ) {
     
 }

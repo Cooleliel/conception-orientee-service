@@ -1,5 +1,6 @@
 package com.ibam.users_service.adapters.controllers.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,35 +14,15 @@ import com.ibam.users_service.domain.model.UserEntity;
 import com.ibam.users_service.usecases.user.CreateUserUseCase;
 import com.ibam.users_service.utils.mapper.UserMapper;
 
-//@Tag(name = "Gestion des utilisateurs")
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/users")
 public class CreateUserController {
-    private final CreateUserUseCase createUserUseCase;
+    @Autowired
+    private CreateUserUseCase createUserUseCase;
     private final UserMapper userMapper = new UserMapper();
 
-    public CreateUserController(CreateUserUseCase createUserUseCase) {
-        this.createUserUseCase = createUserUseCase;
-    }
 
-    //@Operation(summary = "Creer un nouvel utilisateur")
-/**     @ApiResponse(
-        responseCode = "201",
-        description = "Utilisateur cree",
-        content = {
-            @Content(
-                mediaType =  "application/json"
-                schema = @Schema(implementation = UserResponse.class)
-            )
-        }
-    )
-    //@BadRequestApiResponse
-    //@UnauthorizedApiResponse
-    //@ForbiddenApiResponse
-    //@NotFoundApiResponse
-    .@DefaultErrorApiResponse
-**/
-    @PostMapping("/users")
+    @PostMapping("/create")
     public ResponseEntity<UserResponse> createUser( @RequestBody CreateUserRequest body) {
         UserEntity entity = createUserUseCase.execute(body);
         UserResponse response = userMapper.toPublic(entity);

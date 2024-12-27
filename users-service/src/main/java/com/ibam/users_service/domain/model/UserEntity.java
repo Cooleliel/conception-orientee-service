@@ -1,34 +1,35 @@
 package com.ibam.users_service.domain.model;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
+
+import com.ibam.users_service.adapters.jpa.schema.UserSchema.Role;
+
 
 public class UserEntity {
+
+    //variables
+    private Long id;
+    private String username;
+    private String email;
+    private String password;
+    private Role role;
+
 
     //constructor
     public UserEntity(){};
 
     public UserEntity(
-        String name,
+        String username,
         String email,
         String password,
-        String role
+        Role role
     ) {
-        this.name = name;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    
-    //variables
-    private Long id;
-    private String name;
-    private String email;
-    private String password;
-    private String role;
-    private Set<ProductEntity> products = new HashSet<>();
 
 
     //Getters & Setters
@@ -39,11 +40,11 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return username;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -63,28 +64,13 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public Set<ProductEntity> getProducts() {
-        return products;
-    }
-    public void setProducts(Set<ProductEntity> products) {
-        this.products = products;
-    }
-    public void addProduct(ProductEntity product) {
-        products.add(product);
-        product.setUser(this);
-    }
-    public void removeProduct(ProductEntity product) {
-        products.remove(product);
-        product.setUser(null);
-    }
-    
 
     // Equals and hashCode based on email (unique)
     @Override

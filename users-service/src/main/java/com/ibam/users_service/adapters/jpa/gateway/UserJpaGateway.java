@@ -2,6 +2,7 @@ package com.ibam.users_service.adapters.jpa.gateway;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ibam.users_service.adapters.jpa.schema.UserSchema;
@@ -13,12 +14,10 @@ import com.ibam.users_service.utils.mapper.UserMapper;
 @Service
 public class UserJpaGateway implements UserGateway{
 
-    private final UserJpaRepository userJpaRepository;
+    @Autowired
+    private UserJpaRepository userJpaRepository;
     private final UserMapper userMapper = new UserMapper();
 
-    public UserJpaGateway(UserJpaRepository userJpaRepository) {
-        this.userJpaRepository = userJpaRepository;
-    }
 
     @Override
     public boolean existingEmail(String email) {
@@ -47,6 +46,16 @@ public class UserJpaGateway implements UserGateway{
     @Override
     public void deletedById(Long id) {
         userJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<UserEntity> findByUsername(String username) {
+        return userJpaRepository.findByUsername(username).map(userMapper::toModel);
+    }
+
+    @Override
+    public Optional<UserEntity> findByEmail(String email) {
+        return userJpaRepository.findByEmail(email).map(userMapper::toModel);
     }
     
 }

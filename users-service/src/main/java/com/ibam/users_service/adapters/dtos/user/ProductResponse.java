@@ -1,4 +1,4 @@
-package com.ibam.users_service.adapters.dtos.product;
+package com.ibam.users_service.adapters.dtos.user;
 
 import lombok.Builder;
 
@@ -7,6 +7,6 @@ public record ProductResponse(
     Long id,
     String name,
     String description,
-    Double price,
-    Integer stock
+    double price,
+    int stock
 ) {}

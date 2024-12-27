@@ -1,10 +1,13 @@
 package com.ibam.users_service.utils.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.ibam.users_service.adapters.dtos.user.UserResponse;
 import com.ibam.users_service.adapters.jpa.schema.UserSchema;
 import com.ibam.users_service.domain.model.UserEntity;
 import com.ibam.users_service.usecases.user.command.BaseUserCommand;
 
+@Component
 public class UserMapper {
 
     public UserEntity toModel(UserSchema schema) {
@@ -15,7 +18,7 @@ public class UserMapper {
         UserEntity entity = new UserEntity();
         entity.setId(schema.getId());
         entity.setEmail(schema.getEmail());
-        entity.setName(schema.getName());
+        entity.setUserName(schema.getUserName());
         entity.setPassword(schema.getPassword());
         entity.setRole(schema.getRole());
         return entity;
@@ -28,7 +31,7 @@ public class UserMapper {
 
         UserEntity entity = new UserEntity();
         entity.setEmail(command.email());
-        entity.setName(command.name());
+        entity.setUserName(command.username());
         entity.setPassword(command.password());
         entity.setRole(command.role());
         return entity;
@@ -42,7 +45,7 @@ public class UserMapper {
         UserSchema schema = new UserSchema();
         schema.setId(entity.getId());
         schema.setEmail(entity.getEmail());
-        schema.setName(entity.getName());
+        schema.setUserName(entity.getUserName());
         schema.setPassword(entity.getPassword());
         schema.setRole(entity.getRole());
         return schema;
@@ -55,12 +58,9 @@ public class UserMapper {
         return UserResponse
         .builder()
         .id(entity.getId())
-        .name(entity.getName())
+        .username(entity.getUserName())
         .email(entity.getEmail())
         .role(entity.getRole())
-        .products(entity.getProducts())
         .build();
     }
-
-
 }
