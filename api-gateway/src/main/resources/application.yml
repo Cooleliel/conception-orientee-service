@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: users-service
+          uri: http://users-service:8080
+          predicates:
+            - Path=/api/users/**,/api/vendors/**
+          filters:
+            - StripPrefix=1
+        - id: products-service
+          uri: http://products-service:8080
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG

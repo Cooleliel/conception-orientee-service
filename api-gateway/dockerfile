@@ -1,11 +1,13 @@
-# Utiliser l'image officielle de Java
-FROM openjdk:17-jdk-slim
+# Utiliser l'image officielle de Java légère
+FROM eclipse-temurin:17-jre-alpine
 
-# Ajouter le fichier JAR de l'API Gateway
-COPY target/api-gateway.jar api-gateway.jar
+WORKDIR /app
+
+# Copier le fichier JAR de l'API Gateway
+COPY target/api-gateway-0.0.1-SNAPSHOT.jar api-gateway.jar
 
 # Exposer le port sur lequel l'application va tourner
 EXPOSE 8080
 
 # Commande pour démarrer l'API Gateway
-ENTRYPOINT ["java", "-jar", "/api-gateway.jar"]
+ENTRYPOINT ["java", "-jar", "/app/api-gateway.jar"]
