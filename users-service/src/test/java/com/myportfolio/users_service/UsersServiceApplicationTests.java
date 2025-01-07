@@ -1,4 +1,4 @@
-/*package com.ibam.users_service;
+/*package com.myportfolio.users_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
