@@ -2,13 +2,12 @@ package com.myportfolio.users_service.usescases.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.myportfolio.users_service.domain.gateway.UserGateway;
 import com.myportfolio.users_service.domain.model.UserModel;
 import com.myportfolio.users_service.usescases.user.command.BaseUserCommand;
 import com.myportfolio.users_service.utils.mapper.UserMapper;
-
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional // Gère automatiquement les transactions
