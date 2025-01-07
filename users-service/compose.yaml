@@ -1,40 +1,42 @@
 services:
   # Service pour la base de données PostgreSQL
   users-db:
-    # Image officielle de PostgreSQL (version la plus récente)
+    # Image officielle de PostgreSQL (version 15.2)
     image: 'postgres:15.2'
-    # Nom du conteneur
+    # Nom explicite pour le conteneur PostgreSQL
     container_name: users_db
-    # Port mappé entre le conteneur PostgreSQL et l'hôte
+    # Mapper le port PostgreSQL (5432) entre l'hôte et le conteneur
     ports:
-      - '5432:5432'  # Sur l'hôte :5432, dans le conteneur :5432
+      - '5432:5432'  # hôte :5432 <-> conteneur :5432
     # Volume pour persister les données PostgreSQL
     volumes:
-      - users-data:/var/lib/postgresql/data # Le volume `users-data` stocke les données
-    # Verifie que le service de la base de donnees est prete avant de demarrer les autres services
+      - users-data:/var/lib/postgresql/data  # Les données de la base sont conservées même après la suppression du conteneur
+    # Vérifier que le service de la base de données est prêt avant de démarrer les autres services
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s  # Intervalle entre les tests de santé
+      timeout: 5s    # Temps maximum pour chaque test de santé
+      retries: 5     # Nombre de tentatives avant de marquer le service comme non sain
+    # Charger les variables d'environnement depuis un fichier `.env`
     env_file:
-      - .env # Charger les variables pour PostgreSQL depuis le fichier .env
+      - .env
 
   # Service pour l'application Spring Boot
   users-service:
-    # Construction à partir du Dockerfile dans le répertoire courant
+    # Construire l'image à partir du Dockerfile dans le répertoire courant
     build: .
-    # Nom explicite pour le conteneur
+    # Nom explicite pour le conteneur de l'application
     container_name: users_service
-    # Ports mappés entre l'application Spring Boot et l'hôte
+    # Mapper le port entre l'application Spring Boot et l'hôte
     ports:
-      - "8081:8080" # Le port 8081 de l'hôte est mappé au port 8080 du conteneur
-    # Dépendance : le service `users-service` démarre après `users-db`
+      - "8081:8080"  # hôte :8081 <-> conteneur :8080
+    # Dépendance : démarrer ce service uniquement lorsque `users-db` est sain
     depends_on:
-      - users-db
+      users-db: 
+        condition: service_healthy
+    # Charger les variables d'environnement pour Spring Boot depuis un fichier `.env`
     env_file:
-      - .env # Charger les variables pour Spring Boot depuis le fichier .env
+      - .env
 
 # Déclaration d'un volume nommé pour persister les données PostgreSQL
 volumes:
