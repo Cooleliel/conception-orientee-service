@@ -1,0 +1,33 @@
+spring:
+  # Configuration spécifique à Spring
+  application:
+    name: "Users service" # Nom de l'application
+
+  datasource:
+    # Configuration de la base de données
+    url: ${SPRING_DATASOURCE_URL} # URL de connexion à la base
+    username: ${SPRING_DATASOURCE_USERNAME} # Nom d'utilisateur pour la base
+    password: ${SPRING_DATASOURCE_PASSWORD} # Mot de passe pour la base
+    driver-class-name: org.postgresql.Driver # Pilote JDBC pour PostgreSQL
+
+  jpa:
+    # Configurations liées à JPA (Java Persistence API)
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO} # Mise à jour automatique du schéma en développement
+    show-sql: true # Affiche les requêtes SQL dans les logs
+    properties:
+      hibernate:
+        format_sql: true # Formatage des requêtes SQL dans les logs
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  server:
+    # Configuration du serveur web intégré
+    port: 8081 # Port pour les requêtes HTTP
+    servlet:
+      context-path: /api/users # Contexte de base pour les endpoints REST
+
+logging:
+  # Configuration des niveaux de logs
+  level:
+    root: INFO # Niveau global des logs
+    org.springframework: DEBUG # Logs détaillés pour Spring Framework
