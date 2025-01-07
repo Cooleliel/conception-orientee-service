@@ -1,0 +1,41 @@
+services:
+  # Service pour la base de données PostgreSQL
+  users-db:
+    # Image officielle de PostgreSQL (version la plus récente)
+    image: 'postgres:15.2'
+    # Nom du conteneur
+    container_name: users_db
+    # Port mappé entre le conteneur PostgreSQL et l'hôte
+    ports:
+      - '5432:5432'  # Sur l'hôte :5432, dans le conteneur :5432
+    # Volume pour persister les données PostgreSQL
+    volumes:
+      - users-data:/var/lib/postgresql/data # Le volume `users-data` stocke les données
+    # Verifie que le service de la base de donnees est prete avant de demarrer les autres services
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    env_file:
+      - .env # Charger les variables pour PostgreSQL depuis le fichier .env
+
+  # Service pour l'application Spring Boot
+  users-service:
+    # Construction à partir du Dockerfile dans le répertoire courant
+    build: .
+    # Nom explicite pour le conteneur
+    container_name: users_service
+    # Ports mappés entre l'application Spring Boot et l'hôte
+    ports:
+      - "8081:8080" # Le port 8081 de l'hôte est mappé au port 8080 du conteneur
+    # Dépendance : le service `users-service` démarre après `users-db`
+    depends_on:
+      - users-db
+    env_file:
+      - .env # Charger les variables pour Spring Boot depuis le fichier .env
+
+# Déclaration d'un volume nommé pour persister les données PostgreSQL
+volumes:
+  users-data:
