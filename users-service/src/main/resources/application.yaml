@@ -26,6 +26,17 @@ spring:
     servlet:
       context-path: /api/users # Contexte de base pour les endpoints REST
 
+springdoc:
+  api-docs:
+    enabled: true                    # Active/désactive la génération des documents OpenAPI
+    path: /v3/api-docs               # Définit l'URL où les documents OpenAPI seront générés
+  swagger-ui:
+    enabled: true                    # Active/désactive l'interface Swagger UI
+    path: /swagger-ui.html           # Chemin pour accéder à Swagger UI
+    operationsSorter: method         # Trie les opérations par méthode
+    tagsSorter: alpha                # Trie les tags par ordre alphabétique
+
+
 logging:
   # Configuration des niveaux de logs
   level:

@@ -1,12 +1,13 @@
 package com.myportfolio.users_service.adapters.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 // Objet de réponse publique pour l'utilisateur
 @Builder
 public record UserResponse(
-    Long id, // ID de l'utilisateur
-    String username, // Nom d'utilisateur
-    String email, // Adresse e-mail
-    String password // Mot de passe
+    @Schema(example = "1") Long id, // ID de l'utilisateur
+    @Schema(example = "entrepreneur") String username, // Nom d'utilisateur
+    @Schema(example = "johndoe@example.com") String email, // Adresse e-mail
+    @Schema(example = "motdepasse") String password // Mot de passe
 ) {}
