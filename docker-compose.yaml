@@ -1,84 +1,84 @@
-version: '3.8'
+#version: '3.8'
 
-services:
-  api-gateway:
-    build:
-      context: ./api-gateway
-    container_name: "gateway_service"
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-    depends_on:
-      - users-service
-      - products-service
-    networks:
-      - app-network
+#services:
+#  api-gateway:
+#    build:
+#      context: ./api-gateway
+#    container_name: "gateway_service"
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=dev
+#    depends_on:
+#      - users-service
+#      - products-service
+#    networks:
+#      - app-network
 
-  users-service:
-    build:
-      context: ./users-service
-    container_name: "users_service"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://users-db:5432/users
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#  users-service:
+#    build:
+#      context: ./users-service
+#    container_name: "users_service"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=dev
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://users-db:5432/users
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     #entrypoint: [ "users-db:5432", "--", "java", "-jar", "app.jar"]
-    depends_on:
-      - users-db
-    ports:
-      - "8081:8080"
-    networks:
-      - app-network
+#    depends_on:
+#      - users-db
+#    ports:
+#      - "8081:8080"
+#    networks:
+#      - app-network
 
-  products-service:
-    build:
-      context: ./products-service
-    container_name: "products_service"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://products-db:5432/products
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#  products-service:
+#    build:
+#      context: ./products-service
+#    container_name: "products_service"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=dev
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://products-db:5432/products
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     #entrypoint: ["./wait-for-it.sh", "products-db:5432", "--", "java", "-jar", "app.jar"]
-    depends_on:
-      - products-db
-    ports:
-      - "8082:8080"
-    networks:
-      - app-network
+#    depends_on:
+#      - products-db
+#    ports:
+#      - "8082:8080"
+#    networks:
+#      - app-network
 
-  users-db:
-    image: postgres:13
-    container_name: "users_db"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=users
-    networks:
-      - app-network
-    volumes:
-      - users-data:/var/lib/postgresql/data
+#  users-db:
+#    image: postgres:13
+#    container_name: "users_db"
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=users
+#    networks:
+#      - app-network
+#    volumes:
+#      - users-data:/var/lib/postgresql/data
 
-  products-db:
-    image: postgres:13
-    container_name: "products_db"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=products
-    networks:
-      - app-network
-    volumes:
-      - products-data:/var/lib/postgresql/data
+#  products-db:
+#    image: postgres:13
+#    container_name: "products_db"
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=products
+#    networks:
+#      - app-network
+#    volumes:
+#      - products-data:/var/lib/postgresql/data
 
-networks:
-  app-network:
-    driver: bridge
+#networks:
+#  app-network:
+#    driver: bridge
 
-volumes:
-  users-data:
-  products-data:
+#volumes:
+#  users-data:
+#  products-data:
