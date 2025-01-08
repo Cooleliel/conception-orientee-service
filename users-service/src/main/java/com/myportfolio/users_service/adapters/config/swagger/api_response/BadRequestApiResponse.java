@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
     responseCode = "400",
-    description = "Mauvaise requete",
+    description = "Erreur de validation ou de requête incorrecte",
     content = {
         @Content(
             mediaType = "application/json",

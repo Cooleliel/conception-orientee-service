@@ -14,8 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
-    responseCode = "500",
-    description = "Erreur interne du serveur",
+    responseCode = "201",
+    description = "Ressource créée avec succès",
     content = {
         @Content(
             mediaType = "application/json",
@@ -23,6 +23,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
         )
     }
 )
-public @interface DefaultErrorApiResponse {
+public @interface CreatedRequestApiResponse {
     
 }

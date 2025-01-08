@@ -1,5 +1,6 @@
 package com.myportfolio.users_service.utils.exception;
 
+// Classe pour l'exception spécifique Ressource introuvable (Not Found)
 public class ResourceNotFoundException extends RuntimeException{
     private final String message;
 

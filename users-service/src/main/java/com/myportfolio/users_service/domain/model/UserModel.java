@@ -2,6 +2,8 @@ package com.myportfolio.users_service.domain.model;
 
 import java.util.Objects;
 
+import com.myportfolio.users_service.utils.ValidationUtils;
+
 
 public class UserModel {
     // Déclaration des variables d'instance 
@@ -51,7 +53,9 @@ public class UserModel {
     public String getEmail() {
         return email;
     }
+    // Définit l'adresse mail et applique une validation pour le format
     public void setEmail(String email) {
+        ValidationUtils.validateEmail(email);
         this.email = email;
     }
 
@@ -60,9 +64,7 @@ public class UserModel {
     }
     // Définit le mot de passe et applique une validation pour la longueur
     public void setPassword(String password) {
-        if(password.length() < 8) {
-            throw new RuntimeException("Au moins huit (08) caractères requis!");
-        }
+        ValidationUtils.validatePassword(password);
         this.password = password;
     }
 

@@ -48,6 +48,15 @@ public class UserJpaGateway implements UserGateway {
     }
 
     @Override
+    public Optional<UserModel> findByEmail(String email) {
+        // Utilisation de findByUsername pour récupérer un Optional<UserSchema> depuis le JpaRepository.
+        Optional<UserSchema> retrievedUserByUsername = jpaRepository.findByEmail(email);
+
+        // Transformation de UserSchema en UserModel en utilisant map.
+        return retrievedUserByUsername.map(mapper::toModel);
+    }
+
+    @Override
     public UserModel update(UserModel model) {
         // Conversion du modèle en entité, puis enregistrement en base avec mise à jour.
         UserSchema schema = mapper.toSchema(model);

@@ -11,4 +11,6 @@ import com.myportfolio.users_service.adapters.jpa.schema.UserSchema;
 public interface UserJpaRepository extends JpaRepository<UserSchema, Long> {
     // Méthode pour trouver un utilisateur par son nom d'utilisateur.
     Optional<UserSchema> findByUsername(String username);
+    // Méthode pour trouver un utilisateur par son nom email.
+    Optional<UserSchema> findByEmail(String email);
 }

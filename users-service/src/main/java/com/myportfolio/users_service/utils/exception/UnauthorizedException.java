@@ -1,5 +1,6 @@
 package com.myportfolio.users_service.utils.exception;
 
+// Classe pour l'exception spécifique Authentification Requise (Unauthorized)
 public class UnauthorizedException extends RuntimeException{
     private final String message;
 

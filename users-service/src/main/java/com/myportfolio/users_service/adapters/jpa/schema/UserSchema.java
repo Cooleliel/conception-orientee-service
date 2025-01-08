@@ -2,6 +2,7 @@ package com.myportfolio.users_service.adapters.jpa.schema;
 
 import java.util.Objects;
 
+import com.myportfolio.users_service.utils.ValidationUtils;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -74,6 +75,7 @@ public class UserSchema {
         return email;
     }
     public void setEmail(String email) {
+        ValidationUtils.validateEmail(email);
         this.email = email;
     }
 
@@ -82,9 +84,7 @@ public class UserSchema {
     }
     // Définit le mot de passe et applique une validation pour la longueur
     public void setPassword(String password) {
-        if(password.length() < 8) {
-            throw new RuntimeException("Au moins huit (08) caractères requis!");
-        }
+        ValidationUtils.validatePassword(password);
         this.password = password;
     }
 

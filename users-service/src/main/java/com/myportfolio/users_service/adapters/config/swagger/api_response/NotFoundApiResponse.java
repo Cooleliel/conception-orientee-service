@@ -11,18 +11,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+// Annotation personnalisée pour les réponses HTTP 404 (Non trouvé)
 @Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
     responseCode = "404",
-    description = "Introuvable",
-    content = {
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(implementation = HttpErrorResponse.class)
-        )
-    }
+    description = "Ressource non trouvée",
+    content = @Content(mediaType = "application/json", schema = @Schema(implementation = HttpErrorResponse.class))
 )
-public @interface NotFoundApiResponse {
-    
-}
+public @interface NotFoundApiResponse {}

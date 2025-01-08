@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
     responseCode = "409",
-    description = "Conflit",
+    description = "Conflit détecté entre les ressources existantes.",
     content = {
         @Content(
             mediaType = "application/json",

@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
     responseCode = "403",
-    description = "Permissions insuffisantes",
+    description = "Accès interdit (autorisations inssufisantes)",
     content = {
         @Content(
             mediaType = "application/json",
