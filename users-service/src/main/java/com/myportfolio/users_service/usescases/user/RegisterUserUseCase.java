@@ -1,6 +1,7 @@
 package com.myportfolio.users_service.usescases.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ public class RegisterUserUseCase {
     private UserGateway gateway; // Interface pour les opérations liées à l'utilisateur
 
     private final UserMapper mapper = new UserMapper(); // Mapper pour convertir les objets
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Méthode principale pour enregistrer un utilisateur
     public UserModel execute(BaseUserCommand command) {
@@ -43,6 +47,14 @@ public class RegisterUserUseCase {
         }*/
 
         UserModel unregistredModel = mapper.toModel(command); // Conversion de la commande en modèle utilisateur
+        
+        // Encodage du mot de passe
+        if (unregistredModel.getPassword() != null && !unregistredModel.getPassword().isBlank()) {
+            String encodedPassword = passwordEncoder.encode(unregistredModel.getPassword());
+            unregistredModel.setPassword(encodedPassword);
+        } else {
+            throw new MissingAttributeException("Le mot de passe est requis");
+        }
         UserModel registredModel = gateway.Register(unregistredModel); // Enregistrement via la passerelle
         return registredModel; // Retourne l'utilisateur enregistré
     }
