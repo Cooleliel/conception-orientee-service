@@ -15,7 +15,6 @@ import com.myportfolio.users_service.adapters.config.swagger.api_response.Create
 import com.myportfolio.users_service.adapters.config.swagger.api_response.DefaultErrorApiResponse;
 import com.myportfolio.users_service.adapters.config.swagger.api_response.ForbiddenApiResponse;
 import com.myportfolio.users_service.adapters.config.swagger.api_response.NotFoundApiResponse;
-import com.myportfolio.users_service.adapters.config.swagger.api_response.SuccessRequestApiResponse;
 import com.myportfolio.users_service.adapters.config.swagger.api_response.UnauthorizedApiResponse;
 import com.myportfolio.users_service.adapters.dto.RegisterUserRequest;
 import com.myportfolio.users_service.adapters.dto.UserResponse;
@@ -41,14 +40,13 @@ public class RegisterUserController {
 
     // Endpoint pour enregistrer un nouvel utilisateur
     @Operation(summary = "Enregistrer un nouvel utilisateur") // Documentation Swagger pour ce point d'entrée
-    @SuccessRequestApiResponse
     @CreatedRequestApiResponse
     @BadRequestApiResponse
     @UnauthorizedApiResponse
     @ForbiddenApiResponse
     @NotFoundApiResponse
     @DefaultErrorApiResponse
-    @PostMapping("/register") // Déclare un endpoint POST à "/api/users/register"
+    @PostMapping(name = "POST") // Déclare un endpoint POST à "/api/users/register"
     public ResponseEntity<UserResponse> registerUser(@Valid @RequestBody RegisterUserRequest request) {
         // 1. Exécute la logique métier pour enregistrer un utilisateur
         UserModel model = useCase.execute(request);
