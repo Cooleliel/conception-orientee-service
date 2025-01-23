@@ -1,5 +1,6 @@
 package com.myportfolio.users_service.utils.mapper;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.myportfolio.users_service.adapters.dto.UserResponse;
@@ -9,6 +10,19 @@ import com.myportfolio.users_service.usescases.user.command.BaseUserCommand;
 
 @Component // Annotation qui marque cette classe comme un composant Spring.
 public class UserMapper {
+
+    public UserDetails toUserDetails(UserModel model) {
+        if (model == null) {
+            return null; // Retourne null si le modèle est null.
+        }
+        UserSchema schema = new UserSchema();
+        schema.setId(model.getId());
+        schema.setUsername(model.getUsername());
+        schema.setEmail(model.getEmail());
+        schema.setPassword(model.getPassword());
+        schema.setRole(model.getRole());
+        return schema; // Retourne l'entité créée.
+    }
 
     // Convertit un UserModel (objet métier) en UserSchema (entité persistante).
     public UserSchema toSchema(UserModel model) {
@@ -20,6 +34,7 @@ public class UserMapper {
         schema.setUsername(model.getUsername());
         schema.setEmail(model.getEmail());
         schema.setPassword(model.getPassword());
+        schema.setRole(model.getRole());
         return schema; // Retourne l'entité créée.
     }
 
@@ -33,6 +48,7 @@ public class UserMapper {
         model.setUsername(schema.getUsername());
         model.setEmail(schema.getEmail());
         model.setPassword(schema.getPassword());
+        model.setRole(schema.getRole());
         return model; // Retourne le modèle créé.
     }
     // Conversion d'une commande en modèle utilisateur
@@ -44,6 +60,7 @@ public class UserMapper {
         model.setUsername(command.username()); // Définit le nom d'utilisateur
         model.setEmail(command.email()); // Définit l'email
         model.setPassword(command.password()); // Définit le mot de passe
+        model.setRole(command.role());
         return model; // Retourne le modèle utilisateur
     }
 
@@ -57,6 +74,7 @@ public class UserMapper {
             .username(model.getUsername()) // Définit le nom d'utilisateur
             .email(model.getEmail()) // Définit l'email
             .password(model.getPassword()) // Définit le mot de passe
+            .role(model.getRole())
             .build(); // Retourne l'objet réponse
     }
 }
