@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.myportfolio.users_service.adapters.config.exception.HttpErrorResponse;
+import com.myportfolio.users_service.adapters.dto.UserResponse;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,6 +17,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @ApiResponse(
     responseCode = "200",
     description = "Requête traitée avec succès",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = HttpErrorResponse.class))
+    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))
 )
 public @interface SuccessRequestApiResponse {}
