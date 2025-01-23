@@ -1,11 +1,17 @@
 package com.myportfolio.users_service.domain.model;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.myportfolio.users_service.utils.ValidationUtils;
+import com.myportfolio.users_service.utils.enums.RoleType;
 
 
-public class UserModel {
+public class UserModel implements UserDetails{
     // Déclaration des variables d'instance 
 
     private Long id;
@@ -15,6 +21,8 @@ public class UserModel {
     private String email;
 
     private String password;
+
+    private RoleType role;
 
     // Constructeurs
     
@@ -26,12 +34,14 @@ public class UserModel {
         Long id,
         String username,
         String email,
-        String password
+        String password,
+        RoleType role
     ) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     // Getters et Setters pour accéder et modifier les champs
@@ -66,6 +76,38 @@ public class UserModel {
     public void setPassword(String password) {
         ValidationUtils.validatePassword(password);
         this.password = password;
+    }
+
+    public RoleType getRole() {
+        return role;
+    }
+    public void setRole(RoleType role) {
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(() -> "ROLE_" + this.role); // Ex: ROLE_ADMIN, ROLE_USER
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     // Redéfinit la méthode equals pour comparer les entités en fonction du username
